@@ -4,7 +4,7 @@ import { GlobalContext } from "../context/globalContext";
 import { toast } from "react-toastify";
 
 function ProductsContainer() {
-  const { dispatch, selectedProducts } = useContext(GlobalContext);
+  const { addProduct, selectedProducts } = useContext(GlobalContext);
   const { products } = useLoaderData();
 
   const buyProduct = (e, prod) => {
@@ -14,7 +14,7 @@ function ProductsContainer() {
       toast.warn("Already, added !");
       return;
     }
-    dispatch({ type: "ADD_PRODUCT", payload: prod });
+    addProduct({ ...prod, amount: 1 });
   };
   return (
     <div className="grid md:grid-cols-3 gap-5">

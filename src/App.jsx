@@ -25,8 +25,12 @@ import { loader as SingleProductLoader } from "./pages/SingleProduct";
 
 // components
 import { ProtectedRoutes } from "./components";
+
+// global context
+import { useGloablContext } from "./hooks/useGlobalContext";
+
 function App() {
-  const user = true;
+  const { user, authReady } = useGloablContext();
   const routes = createBrowserRouter([
     {
       path: "/",
@@ -62,15 +66,15 @@ function App() {
     },
     {
       path: "/login",
-      element: user ? <Navigate /> : <Login />,
+      element: user ? <Navigate to="/" /> : <Login />,
     },
     {
       path: "/register",
-      element: user ? <Navigate /> : <Register />,
+      element: user ? <Navigate to="/" /> : <Register />,
     },
   ]);
 
-  return <RouterProvider router={routes} />;
+  return <>{authReady && <RouterProvider router={routes} />}</>;
 }
 
 export default App;
